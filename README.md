@@ -3,14 +3,11 @@
 A simple cli tool written in Rust that provides practice numeracy questions.
 
 ## Features
-  - Times Tables
-  - Addition
-  - Division
-  - Mixed Practice (All Operations)
-  - Kelly Bet Practice (for learning optimal betting fractions)
-
-- Configurable practice sessions:
-  - Set number of questions or time limits
+- Times Tables
+- Addition
+- Division
+- Mixed Practice (All Operations)
+- Kelly Bet Practice (for learning optimal betting fractions)
 
 ## Practice Modes
 
