@@ -1,14 +1,19 @@
+// for colour text
 use colored::*;
+// for final summary
 use ctrlc;
+// read the name
 use rand::Rng;
+
 use std::io::{self, Write};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::time::{Duration, Instant};
 
 static TOTAL_QUESTIONS: AtomicUsize = AtomicUsize::new(0);
 static CORRECT_ANSWERS: AtomicUsize = AtomicUsize::new(0);
-static START_TIME: AtomicUsize = AtomicUsize::new(0); // Stores duration since UNIX epoch in seconds
-                                                      // Number ranges for different operations
+static START_TIME: AtomicUsize = AtomicUsize::new(0); // seconds since start of time (unix epoch)
+
+// num ranges - make these settable at some point - config file???
 const MULTIPLICATION_MIN: i32 = 2;
 const MULTIPLICATION_MAX: i32 = 13;
 const ADDITION_MIN: i32 = 1;
@@ -16,11 +21,13 @@ const ADDITION_MAX: i32 = 100;
 const DIVISION_MAX_MULTIPLIER: i32 = 13;
 const DIVISION_MAX_DIVISOR: i32 = 13;
 
+// config for how to determine limits on this session
 struct PracticeConfig {
     num_questions: Option<i32>,
     time_limit: Option<Duration>,
 }
 
+// i dont think this is used now
 impl Default for PracticeConfig {
     fn default() -> Self {
         PracticeConfig {
@@ -29,24 +36,30 @@ impl Default for PracticeConfig {
         }
     }
 }
+
+// fetch the user desired state of above struct
 fn get_practice_config() -> PracticeConfig {
     println!(
         "\n{}",
         "=== Practice Configuration ===".bright_cyan().bold()
     );
-    println!("(At least one of these must be set)");
+    // here for posterity
+    // println!("(At least one of these must be set)");
 
     print!("Enter number of questions (press Enter for unlimited): ");
     io::stdout().flush().unwrap();
 
     let mut input = String::new();
+    // grab the input
     io::stdin().read_line(&mut input).unwrap();
     let num_questions = if input.trim().is_empty() {
         None
     } else {
+        // bad to default to 5 silently
         Some(input.trim().parse().unwrap_or(5))
     };
-
+    
+    // flush is so text appears before newline - this is cringe
     print!("Enter time limit in minutes (press Enter for no limit): ");
     io::stdout().flush().unwrap();
 
@@ -62,12 +75,7 @@ fn get_practice_config() -> PracticeConfig {
     };
 
     if num_questions.is_none() && time_limit.is_none() {
-        println!(
-            "{}",
-            "Setting default 10 minutes."
-                .bright_magenta()
-                .bold()
-        );
+        println!("{}", "Setting default 10 minutes.".bright_magenta().bold());
         PracticeConfig {
             num_questions: None,
             time_limit: Some(Duration::from_secs(600)), // 10 minutes
