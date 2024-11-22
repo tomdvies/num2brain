@@ -1,0 +1,10 @@
+[package]
+name = "num2brain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+colored = "2.1.0"
+ctrlc = "3.4.5"
+lazy_static = "1.5.0"
+rand = "0.8.5"
