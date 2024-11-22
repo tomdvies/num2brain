@@ -375,11 +375,10 @@ fn practice_kelly_bet() {
             }
         }
 
-        // Generate random odds (between 1.5 and 5.0) and probability (between 0.4 and 0.8)
         let decimal_odds = rng.gen_range(1.5..5.0);
         let win_prob = rng.gen_range(0.2..0.8);
 
-        // Calculate true Kelly fraction: (bp - q)/b where:
+        // true kelly bet: (bp - q)/b 
         // b = decimal odds - 1
         // p = probability of winning
         // q = probability of losing (1-p)
